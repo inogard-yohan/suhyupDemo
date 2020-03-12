@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script
+            src="https://code.jquery.com/jquery-1.12.4.min.js"
+            integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<input type="file">
+<br />
+<textarea  id="abcd" rows="10" cols="50" ></textarea>
+<br />
+<div id="text"></div>
+<button onclick="callFlutter()">클릭</button>
+<button onclick="callFlutter2()">클릭2</button>
+
+<input id="myInput" type="file">
+<button id="myBtn">Try it</button>
+<span id="file"></span>
+<img id="i" />
+<form action="fileupload" method="post" enctype="multipart/form-data">
+    <input type="file" name="filename" />
+    <input type="submit" value="저장" />
+
+</form>
+<script type="text/javascript">
+    var formData = new FormData();
+    function if_File(base64, fileName) {
+        var binary_string = window.atob(base64);
+        var len = binary_string.length;
+        var bytes = new Uint8Array(len);
+        for (var i = 0; i < len; i++) {
+            bytes[i] = binary_string.charCodeAt(i);
+        }
+
+        var blob = new Blob([bytes]);
+        var lastModified = new Date();
+        var file = new File([blob], fileName, {lastModified: lastModified});
+
+
+        formData.append("filename", file);
+
+
+
+
+        // document.getElementById('file').innerText = blob.size + '  ||  ' + blob.type;
+
+
+        const url = window.URL.createObjectURL(file);
+        const img = document.getElementById('i');
+        img.src = url;
+
+
+
+
+    }
+    function callFlutter() {
+        // document.write(window.Android);
+        // window.Android.setAutoLogin(true);
+        // autoLogin.postMessage(true);
+
+        var request = new XMLHttpRequest();
+        request.open("POST", "/fileupload");
+        request.send(formData);
+
+
+    }
+
+    function callFlutter2(){
+        imagePicker.postMessage(true);
+    }
+
+    var userAgent=navigator.userAgent;
+    // document.write(userAgent);
+
+
+
+</script>
+</body>
+</html>
+
+
+
